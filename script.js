@@ -28,7 +28,7 @@ async function analyzeProduct() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ product: userInput })
+            body: JSON.stringify({ title: userInput })
         });
 
         if (!response.ok) {
@@ -36,13 +36,21 @@ async function analyzeProduct() {
         }
 
         const data = await response.json();
-        const resultText = typeof data.result === 'string' ? data.result.trim() : '';
+        const title = typeof data.title === 'string' ? data.title.trim() : '';
+        const description = typeof data.description === 'string' ? data.description.trim() : '';
+        const fallback = typeof data.result === 'string' ? data.result.trim() : '';
 
-        if (!resultText) {
+        if (!title && !description && !fallback) {
             throw new Error('No result was returned by the AI service.');
         }
 
-        welcomeResponse.textContent = resultText;
+        if (description) {
+            const heading = title ? `<h3>${escapeHtml(title)}</h3>` : '';
+            welcomeResponse.innerHTML = `${heading}${description}`;
+            return;
+        }
+
+        welcomeResponse.textContent = fallback || title;
     } catch (error) {
         welcomeResponse.textContent = 'Something went wrong while analyzing your idea. Please try again.';
         console.error(error);
@@ -61,4 +69,10 @@ if (productInput) {
             analyzeProduct();
         }
     });
+}
+
+function escapeHtml(value) {
+    const div = document.createElement('div');
+    div.textContent = value;
+    return div.innerHTML;
 }

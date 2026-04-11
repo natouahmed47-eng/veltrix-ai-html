@@ -1,0 +1,102 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-start: #f6efe6;
+    --bg-end: #dce8f5;
+    --panel: rgba(255, 255, 255, 0.78);
+    --panel-border: rgba(34, 52, 74, 0.08);
+    --text: #142033;
+    --muted: #5f6f86;
+    --accent: #0d9488;
+    --accent-dark: #0f766e;
+    --shadow: 0 24px 60px rgba(20, 32, 51, 0.16);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
+    background: radial-gradient(circle at top left, #fff7ed 0%, transparent 32%),
+        linear-gradient(135deg, var(--bg-start), var(--bg-end));
+}
+
+.hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.hero__card {
+    width: min(680px, 100%);
+    padding: 48px 32px;
+    border: 1px solid var(--panel-border);
+    border-radius: 28px;
+    background: var(--panel);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.hero__eyebrow {
+    margin: 0 0 12px;
+    color: var(--accent-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(2.6rem, 7vw, 4.8rem);
+    line-height: 0.95;
+}
+
+.hero__message {
+    margin: 20px auto 0;
+    max-width: 520px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.hero__button {
+    margin-top: 28px;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 26px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 14px 30px rgba(13, 148, 136, 0.28);
+}
+
+.hero__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(13, 148, 136, 0.34);
+}
+
+.hero__response {
+    min-height: 24px;
+    margin: 18px 0 0;
+    color: var(--accent-dark);
+    font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    .hero__card {
+        padding: 36px 24px;
+        border-radius: 22px;
+    }
+
+    .hero__message {
+        font-size: 1rem;
+    }
+}

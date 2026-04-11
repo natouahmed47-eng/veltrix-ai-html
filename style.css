@@ -153,6 +153,25 @@ h1 {
     white-space: pre-line;
 }
 
+.hero__response h3 {
+    margin: 0 0 12px;
+    font-size: 1.2rem;
+    line-height: 1.3;
+}
+
+.hero__response p {
+    margin: 0 0 12px;
+}
+
+.hero__response ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.hero__response li + li {
+    margin-top: 8px;
+}
+
 @media (max-width: 640px) {
     .hero__card {
         padding: 36px 24px;
@@ -171,4 +190,4 @@ h1 {
     .hero__button {
         width: 100%;
     }
-}
+    }

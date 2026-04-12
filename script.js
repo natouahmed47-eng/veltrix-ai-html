@@ -50,3 +50,4 @@ button {
     margin-top: 0;
     color: #34d399;
 }
+const API_URL = "https://veltrix-ai-fx5c.onrender.com/analyze";

@@ -1,78 +1,56 @@
-const analyzeButton = document.getElementById('analyzeButton');
-const productInput = document.getElementById('productInput');
-const welcomeResponse = document.getElementById('welcomeResponse');
-
-const API_BASE_URL = window.location.hostname.endsWith('github.io')
-    ? 'https://veltrix-ai-fx5c.onrender.com'
-    : '';
-
-async function analyzeProduct() {
-    if (!analyzeButton || !productInput || !welcomeResponse) {
-        return;
-    }
-
-    const userInput = productInput.value.trim();
-
-    if (!userInput) {
-        welcomeResponse.textContent = 'Please enter a product or idea first.';
-        productInput.focus();
-        return;
-    }
-
-    analyzeButton.disabled = true;
-    welcomeResponse.textContent = 'Analyzing...';
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/optimize-product`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ title: userInput })
-        });
-
-        if (!response.ok) {
-            throw new Error('The server could not process the request.');
-        }
-
-        const data = await response.json();
-        const title = typeof data.title === 'string' ? data.title.trim() : '';
-        const description = typeof data.description === 'string' ? data.description.trim() : '';
-        const fallback = typeof data.result === 'string' ? data.result.trim() : '';
-
-        if (!title && !description && !fallback) {
-            throw new Error('No result was returned by the AI service.');
-        }
-
-        if (description) {
-            const heading = title ? `<h3>${escapeHtml(title)}</h3>` : '';
-            welcomeResponse.innerHTML = `${heading}${description}`;
-            return;
-        }
-
-        welcomeResponse.textContent = fallback || title;
-    } catch (error) {
-        welcomeResponse.textContent = 'Something went wrong while analyzing your idea. Please try again.';
-        console.error(error);
-    } finally {
-        analyzeButton.disabled = false;
-    }
+function createCard(title, content) {
+    return `
+        <div class="card">
+            <h3>${title}</h3>
+            <p>${content}</p>
+        </div>
+    `;
 }
 
-if (analyzeButton) {
-    analyzeButton.addEventListener('click', analyzeProduct);
-}
+function renderResult(data) {
+    let html = "";
 
-if (productInput) {
-    productInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            analyzeProduct();
-        }
-    });
-}
+    html += createCard("📦 Summary", data.short_summary || "");
+    html += createCard("🧩 Category", data.category || "");
 
-function escapeHtml(value) {
-    const div = document.createElement('div');
-    div.textContent = value;
-    return div.innerHTML;
+    if (data.scent_family) {
+        html += createCard("🌿 Scent Family", data.scent_family);
+    }
+
+    if (data.fragrance_notes) {
+        const notes = data.fragrance_notes;
+        html += createCard(
+            "🧪 Notes",
+            `
+            <strong>Top:</strong> ${(notes.top || []).join(", ")}<br>
+            <strong>Heart:</strong> ${(notes.heart || []).join(", ")}<br>
+            <strong>Base:</strong> ${(notes.base || []).join(", ")}
+            `
+        );
+    }
+
+    if (data.projection) {
+        html += createCard("📡 Projection", data.projection);
+    }
+
+    if (data.longevity) {
+        html += createCard("⏳ Longevity", data.longevity);
+    }
+
+    if (data.target_audience) {
+        html += createCard("🎯 Target Audience", data.target_audience);
+    }
+
+    if (data.key_benefits) {
+        html += createCard(
+            "💡 Key Benefits",
+            (data.key_benefits || []).join("<br>")
+        );
+    }
+
+    if (data.long_description) {
+        html += createCard("📝 Description", data.long_description);
+    }
+
+    document.getElementById("result").innerHTML = html;
 }

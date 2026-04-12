@@ -1,56 +1,52 @@
-function createCard(title, content) {
-    return `
-        <div class="card">
-            <h3>${title}</h3>
-            <p>${content}</p>
-        </div>
-    `;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    margin: 0;
+    padding: 0;
 }
 
-function renderResult(data) {
-    let html = "";
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
+}
 
-    html += createCard("📦 Summary", data.short_summary || "");
-    html += createCard("🧩 Category", data.category || "");
+input {
+    width: 80%;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
 
-    if (data.scent_family) {
-        html += createCard("🌿 Scent Family", data.scent_family);
-    }
+button {
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: none;
+    background: #10b981;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-    if (data.fragrance_notes) {
-        const notes = data.fragrance_notes;
-        html += createCard(
-            "🧪 Notes",
-            `
-            <strong>Top:</strong> ${(notes.top || []).join(", ")}<br>
-            <strong>Heart:</strong> ${(notes.heart || []).join(", ")}<br>
-            <strong>Base:</strong> ${(notes.base || []).join(", ")}
-            `
-        );
-    }
+.result-container {
+    margin-top: 30px;
+    display: grid;
+    gap: 20px;
+}
 
-    if (data.projection) {
-        html += createCard("📡 Projection", data.projection);
-    }
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: left;
+    backdrop-filter: blur(10px);
+}
 
-    if (data.longevity) {
-        html += createCard("⏳ Longevity", data.longevity);
-    }
-
-    if (data.target_audience) {
-        html += createCard("🎯 Target Audience", data.target_audience);
-    }
-
-    if (data.key_benefits) {
-        html += createCard(
-            "💡 Key Benefits",
-            (data.key_benefits || []).join("<br>")
-        );
-    }
-
-    if (data.long_description) {
-        html += createCard("📝 Description", data.long_description);
-    }
-
-    document.getElementById("result").innerHTML = html;
+.card h3 {
+    margin-top: 0;
+    color: #34d399;
 }

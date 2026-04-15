@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>Veltrix AI</title>
-
-<!-- PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=AXII0NIu0wnEJwazRqZ5UsowkdJWxJdVYxrxUT84kYljpayOSUFC76fMRyvJbIFMuzYjZMv3gP53U4C3&vault=true&intent=subscription"></script>
-
+  <meta charset="UTF-8">
+  <title>Veltrix AI</title>
+  <script src="https://www.paypal.com/sdk/js?client-id=AXII0NIu0wnEJwazRqZ5UsowkdJWxJdVYxrxUT84kYljpayOSUFC76fMRyvJbIFMuzYjZMv3gP53U4C3&vault=true&intent=subscription&currency=USD"></script>
 </head>
-
 <body>
 
-<h2>اشترك الآن في Veltrix Pro</h2>
+  <h2>اشترك الآن في Veltrix Pro</h2>
+  <div id="paypal-button-container"></div>
 
-<div id="paypal-button-container"></div>
-
-<script>
-paypal.Buttons({
-    style: {
+  <script>
+    paypal.Buttons({
+      style: {
         shape: 'rect',
         color: 'gold',
         layout: 'vertical',
         label: 'subscribe'
-    },
-    createSubscription: function(data, actions) {
+      },
+      createSubscription: function (data, actions) {
         return actions.subscription.create({
-            'plan_id': 'P-5FK62061DH6777518NHPN64A'
+          plan_id: 'P-5FK62061DH6777518NHPN64A'
         });
-    },
-    onApprove: function(data, actions) {
+      },
+      onApprove: function (data) {
         alert('تم الاشتراك بنجاح! ID: ' + data.subscriptionID);
-    }
-}).render('#paypal-button-container');
-</script>
+        console.log('Subscription approved:', data);
+      },
+      onCancel: function (data) {
+        console.log('Subscription cancelled:', data);
+        alert('تم إلغاء عملية الاشتراك.');
+      },
+      onError: function (err) {
+        console.error('PayPal error:', err);
+        alert('حدث خطأ أثناء فتح أو إكمال الدفع. افتح الصفحة من متصفح عادي عبر http/https وليس كملف محلي.');
+      }
+    }).render('#paypal-button-container');
+  </script>
 
 </body>
 </html>

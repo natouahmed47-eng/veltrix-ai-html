@@ -18,22 +18,32 @@
         layout: 'vertical',
         label: 'subscribe'
       },
-      createSubscription: function (data, actions) {
+
+      onClick: function () {
+        console.log("PayPal button clicked");
+        alert("تم الضغط على زر PayPal");
+      },
+
+      createSubscription: function(data, actions) {
+        console.log("Creating subscription with plan...");
         return actions.subscription.create({
           plan_id: 'P-5FK62061DH6777518NHPN64A'
         });
       },
-      onApprove: function (data) {
+
+      onApprove: function(data) {
+        console.log("Subscription approved:", data);
         alert('تم الاشتراك بنجاح! ID: ' + data.subscriptionID);
-        console.log('Subscription approved:', data);
       },
-      onCancel: function (data) {
-        console.log('Subscription cancelled:', data);
-        alert('تم إلغاء عملية الاشتراك.');
+
+      onCancel: function(data) {
+        console.log("Subscription cancelled:", data);
+        alert("تم إلغاء عملية الاشتراك");
       },
-      onError: function (err) {
-        console.error('PayPal error:', err);
-        alert('حدث خطأ أثناء فتح أو إكمال الدفع. افتح الصفحة من متصفح عادي عبر http/https وليس كملف محلي.');
+
+      onError: function(err) {
+        console.error("PayPal error:", err);
+        alert("حدث خطأ أثناء فتح الدفع. افتح الصفحة من متصفح عادي عبر https.");
       }
     }).render('#paypal-button-container');
   </script>

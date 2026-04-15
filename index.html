@@ -1,35 +1,38 @@
-<!DOCTYPE html><html lang="ar"><head><meta charset="UTF-8"><title>Veltrix AI</title><!-- PayPal SDK --><script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&vault=true&intent=subscription"></script></head><body><h2>اشترك الآن في Veltrix Pro</h2><!-- زر PayPal --><div id="paypal-button-container"></div><script>
-  
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Veltrix AI</title>
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AXII0NIu0wnEJwazRqZ5UsowkdJWxJdVYxrxUT84kYljpayOSUFC76fMRyvJbIFMuzYjZMv3gP53U4C3&vault=true&intent=subscription"></script>
+
+</head>
+
+<body>
+
+<h2>اشترك الآن في Veltrix Pro</h2>
+
+<div id="paypal-button-container"></div>
+
+<script>
 paypal.Buttons({
-  
     style: {
-  
         shape: 'rect',
-  
         color: 'gold',
-  
         layout: 'vertical',
-  
         label: 'subscribe'
-  
     },
-  
     createSubscription: function(data, actions) {
-  
         return actions.subscription.create({
-  
-            AXII0NIu0wnEJwazRqZ5UsowkdJWxJdVYxrxUT84kYljpayOSUFC76fMRyvJbIFMuzYjZMv3gP53U4C3
-  
+            'plan_id': 'P-5FK62061DH6777518NHPN64A'
         });
-  
     },
-  
     onApprove: function(data, actions) {
-  
-        alert('تم الاشتراك بنجاح! Subscription ID: ' + data.subscriptionID);
-  
+        alert('تم الاشتراك بنجاح! ID: ' + data.subscriptionID);
     }
-  
 }).render('#paypal-button-container');
-  
-</script></body></html>
+</script>
+
+</body>
+</html>
